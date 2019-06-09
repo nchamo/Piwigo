@@ -396,7 +396,7 @@ SELECT
 
   $logger->info(__FUNCTION__.' : force cache generation, derivative_url = '.$derivative_url);
 
-  fetchRemote($derivative_url, $dest);
+  //fetchRemote($derivative_url, $dest);
 
   return $image_id;
 }
