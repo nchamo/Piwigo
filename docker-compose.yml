@@ -1,0 +1,29 @@
+version: "3"
+services:
+  piwigo:
+    build: .
+    network_mode: bridge
+    volumes:
+      - ${WO_DIR}/mysql/:/var/lib/mysql
+    ports:
+      - "${WO_PORT}:9000"
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5
+    network_mode: bridge
+    volumes:
+      - ${WO_DIR}/data/galleries:/var/www/galleries
+      - ${WO_DIR}/data/local:/var/www/local
+      - ${WO_DIR}/data/plugins:/var/www/plugins
+      - ${WO_DIR}/data/themes:/var/www/themes
+      - ${WO_DIR}/cache:/var/www/_data/i
+      - ${WO_DIR}/upload:/var/www/upload
+      - /var/log
+      - /var/log/piwigo:/var/log/apache2
+    environment:
+      MYSQL_USER: "piwigo"
+      MYSQL_PASSWORD: "piwigo1234passfromosa"
+      MYSQL_DATABASE: "piwigo"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
