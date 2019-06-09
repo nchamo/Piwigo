@@ -27,6 +27,13 @@ case $key in
     ;;
 	--dir)
     export WO_DIR=$(realpath "$2")
+    export WO_DIR_GALLERIES="$WO_DIR/data/galleries"
+    export WO_DIR_LOCAL="$WO_DIR/data/local"
+    export WO_DIR_PLUGINS="$WO_DIR/data/plugins"
+    export WO_DIR_THEMES="$WO_DIR/data/themes"
+    export WO_DIR_CACHE="$WO_DIR/cache"
+    export WO_DIR_UPLOAD="$WO_DIR/upload"
+    export WO_DIR_MYSQL="$WO_DIR/mysql"
     shift # past argument
     shift # past value
     ;;
@@ -52,7 +59,7 @@ usage(){
   echo "Options:"
   echo "	--port	<port>	Set the port that WebODM should bind to (default: $DEFAULT_PORT)"
   echo "	--hostname	<hostname>	Set the hostname that Piwigo will be accessible from (default: $DEFAULT_HOST)"
-  echo "	---dir	<path>	Path where data will be persisted (default: $DEFAULTA_DIR (docker named volume))"
+  echo "	---dir	<path>	Path where data will be persisted (default: $DEFAULT_DIR (docker named volume))"
   exit
 }
 

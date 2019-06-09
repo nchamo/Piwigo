@@ -1,10 +1,25 @@
 version: "3"
+volumes:
+  Galleries:
+  Local:
+  Plugins:
+  Themes:
+  Cache:
+  Upload:
+  Mysql:
 services:
   piwigo:
     build: .
     network_mode: bridge
     volumes:
-      - ${WO_DIR}/mysql/:/var/lib/mysql
+      - ${WO_DIR_GALLERIES}:/piwigo/piwigo/galleries
+      - ${WO_DIR_LOCAL}:/piwigo/piwigo/local
+      - ${WO_DIR_PLUGINS}:/piwigo/piwigo/plugins
+      - ${WO_DIR_THEMES}:/piwigo/piwigo/themes
+      - ${WO_DIR_CACHE}:/piwigo/piwigo/_data/i
+      - ${WO_DIR_UPLOAD}:/piwigo/piwigo/upload
+      - /var/log
+      - /var/log/piwigo:/var/log/apache2
     ports:
       - "${WO_PORT}:9000"
     links:
@@ -14,16 +29,9 @@ services:
     image: mysql:5
     network_mode: bridge
     volumes:
-      - ${WO_DIR}/data/galleries:/var/www/galleries
-      - ${WO_DIR}/data/local:/var/www/local
-      - ${WO_DIR}/data/plugins:/var/www/plugins
-      - ${WO_DIR}/data/themes:/var/www/themes
-      - ${WO_DIR}/cache:/var/www/_data/i
-      - ${WO_DIR}/upload:/var/www/upload
-      - /var/log
-      - /var/log/piwigo:/var/log/apache2
+      - ${WO_DIR_MYSQL}:/var/lib/mysql
     environment:
       MYSQL_USER: "piwigo"
-      MYSQL_PASSWORD: "piwigo1234passfromosa"
+      MYSQL_PASSWORD: "piwigo"
       MYSQL_DATABASE: "piwigo"
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
