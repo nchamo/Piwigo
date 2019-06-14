@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update -y
-RUN apt-get install -y php7.0 php7.0-gd php7.0-mysqli php7.0-json php7.0-zip imagemagick exiftool libjpeg-progs
+RUN apt-get install -y php7.0 php7.0-gd php7.0-mysqli php7.0-json php7.0-zip php7.0-mbstring imagemagick exiftool libjpeg-progs
 
 ADD . /piwigo/piwigo
 
