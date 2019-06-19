@@ -7,10 +7,13 @@ volumes:
   Cache:
   Upload:
   Mysql:
+networks:
+  web:
+    external: true
 services:
   piwigo:
     build: .
-    network_mode: bridge
+    container_name: piwigo
     volumes:
       - ${WO_DIR_GALLERIES}:/piwigo/piwigo/galleries
       - ${WO_DIR_LOCAL}:/piwigo/piwigo/local
@@ -20,14 +23,22 @@ services:
       - ${WO_DIR_UPLOAD}:/piwigo/piwigo/upload
       - /var/log
       - /var/log/piwigo:/var/log/apache2
-    ports:
-      - "${WO_PORT}:9000"
+    expose:
+      - "9000"
     links:
       - mysql
+    labels:
+      - traefik.backend=piwigo
+      - traefik.frontend.rule=Host:imagenes.localhost
+      - traefik.docker.network=web
+      - traefik.port=9000
+      - traefik.enable=true
+    networks:
+      - web
+      - default
 
   mysql:
     image: mysql:5
-    network_mode: bridge
     volumes:
       - ${WO_DIR_MYSQL}:/var/lib/mysql
     environment:
