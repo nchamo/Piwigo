@@ -29,7 +29,7 @@ services:
       - mysql
     labels:
       - traefik.backend=piwigo
-      - traefik.frontend.rule=Host:imagenes.localhost
+      - traefik.frontend.rule=Host:imagenes.${WO_HOST}
       - traefik.docker.network=web
       - traefik.port=9000
       - traefik.enable=true
